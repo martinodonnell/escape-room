@@ -4,6 +4,11 @@ import { PanoView } from "./components/PanoView";
 function App() {
   const [src, setSrc] = useState("");
 
+  const handleChange = (event) => {
+    console.log(event.target.files[0]);
+    setSrc(event.target.files[0]);
+  };
+
   return (
     <div>
       {src ? (
@@ -12,7 +17,9 @@ function App() {
           roomName="Boat Room"
         />
       ) : (
-        <div>ss</div>
+        <div>
+          <input type="file" onChange={handleChange} />
+        </div>
       )}
     </div>
   );

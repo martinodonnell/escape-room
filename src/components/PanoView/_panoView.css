@@ -1,3 +1,20 @@
-.viewer {
-  height: 100vh;
+header {
+  margin-bottom: 40px;
+  padding: 30px 20px;
+  background: linear-gradient(to left, #f0f0f0, #ffffff 50%);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  color: #3d3d3d;
+}
+
+#content {
+  width: 70%;
+  max-width: 1000px;
+  margin: 0 auto;
+  line-height: 1.5em;
+  font-size: 1.1em;
 }

@@ -89,7 +89,7 @@ const PanoView = ({ src, roomName }) => {
             },
             tooltip: {
               content:
-                "New marker to add. Click the button on nav bar when done",
+                "New marker to add. Inspect page, open console and send me the print out when you click it",
               position: "right bottom",
             },
           });

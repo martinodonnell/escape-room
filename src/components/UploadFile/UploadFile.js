@@ -2,8 +2,21 @@ import React from "react";
 
 const UploadFile = ({ setSrc }) => {
   const handleChange = (event) => {
-    console.log(event.target.files[0]);
-    setSrc(event.target.files[0]);
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener(
+      "load",
+      function () {
+        // convert image file to base64 string
+        setSrc(reader.result);
+      },
+      false
+    );
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
   };
 
   const usePreLoadingPanoram = () => {
@@ -21,7 +34,7 @@ const UploadFile = ({ setSrc }) => {
           able to mask out places in your picture that will be clickable in the
           escape room
         </p>
-        <input type="file" onChange={handleChange} />
+        <input type="file" onChange={handleChange} name="file" />
         <button onClick={usePreLoadingPanoram}>
           Click here to use a pre-set panorama
         </button>

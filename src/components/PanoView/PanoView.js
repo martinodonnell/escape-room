@@ -1,15 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Viewer } from "photo-sphere-viewer";
 import "../../../node_modules/photo-sphere-viewer/dist/photo-sphere-viewer.css";
 
 import MarkersPlugin from "../../../node_modules/photo-sphere-viewer/dist/plugins/markers";
 import "../../../node_modules/photo-sphere-viewer/dist/plugins/markers.css";
 
-const PanoView = ({ src, roomName }) => {
+const PanoView = ({ src, setSrc, roomName }) => {
   const sphereElementRef = React.createRef();
+  const [viewer, setViewer] = React.useState(null);
+
+  const reloadPage = () => {
+    // setSrc("");
+    window.location.reload(false);
+    alert("Reloaded page");
+  };
 
   useEffect(() => {
-    const viewer = new Viewer({
+    var viewer_ = new Viewer({
       container: sphereElementRef.current,
       panorama: src,
       loadingTxt: "hello",
@@ -20,8 +27,8 @@ const PanoView = ({ src, roomName }) => {
           id: "my-button",
           title: "Hello world",
           className: "custom-button",
-          content: "Help",
-          onClick: () => alert("Nav Button press"),
+          content: "Upload New image",
+          onClick: reloadPage,
         },
         "caption",
         "fullscreen",
@@ -37,7 +44,7 @@ const PanoView = ({ src, roomName }) => {
       ],
     });
 
-    var markersPlugin = viewer.getPlugin(MarkersPlugin);
+    var markersPlugin = viewer_.getPlugin(MarkersPlugin);
 
     markersPlugin.on("select-marker", (e, marker) => {
       var text = "";
@@ -60,7 +67,7 @@ const PanoView = ({ src, roomName }) => {
       console.log(text);
     });
 
-    viewer.on("click", (e, data) => {
+    viewer_.on("click", (e, data) => {
       if (!data.rightclick) {
         var newPolyMarkerName = "poly-new";
         var newPolyMarker = markersPlugin["markers"][newPolyMarkerName];
@@ -99,9 +106,9 @@ const PanoView = ({ src, roomName }) => {
 
     // unmount component instructions
     return () => {
-      viewer.destroy();
+      viewer_.destroy();
     };
-  }, [sphereElementRef, src, roomName]); // will only be called when the src prop gets updated
+  }, [viewer, sphereElementRef, src, roomName, setViewer]); // will only be called when the src prop gets updated
 
   return (
     <div>

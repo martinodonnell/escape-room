@@ -9,7 +9,7 @@ function App() {
   return (
     <div>
       {src ? (
-        <PanoView src={src} roomName="Boat Room" />
+        <PanoView src={src} setSrc={setSrc} roomName="Boat Room" />
       ) : (
         <UploadFile setSrc={setSrc} />
       )}

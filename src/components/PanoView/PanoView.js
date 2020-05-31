@@ -1,15 +1,20 @@
-import React, { useEffect } from "react";
-import { Viewer, MarkersPlugin } from "photo-sphere-viewer";
+import React, { useEffect, useState } from "react";
+import { Viewer } from "photo-sphere-viewer";
 import "../../../node_modules/photo-sphere-viewer/dist/photo-sphere-viewer.css";
+
+import MarkersPlugin from "../../../node_modules/photo-sphere-viewer/dist/plugins/markers";
+import "../../../node_modules/photo-sphere-viewer/dist/plugins/markers.css";
 
 const PanoView = ({ src, roomName }) => {
   const sphereElementRef = React.createRef();
+  const [isPolyGenerate, setIsPolyGenerate] = useState(false);
+  const [polyGrid, setPolyGrid] = useState(false);
 
   useEffect(() => {
-    src = "https://photo-sphere-viewer.js.org/assets/sphere.jpg";
     const viewer = new Viewer({
       container: sphereElementRef.current,
-      panorama: src,
+      //   panorama: src,
+      panorama: "https://photo-sphere-viewer.js.org/assets/sphere.jpg",
       loadingTxt: "hello",
       caption: roomName,
       navbar: [
@@ -19,6 +24,13 @@ const PanoView = ({ src, roomName }) => {
           title: "Hello world",
           className: "custom-button",
           content: "Help",
+          onClick: () => alert("Nav Button press"),
+        },
+        {
+          id: "create-poly",
+          title: "Create Poly",
+          className: "custom-button-poly",
+          content: "Create-Poly",
           onClick: () => alert("Nav Button press"),
         },
         "caption",
@@ -53,9 +65,17 @@ const PanoView = ({ src, roomName }) => {
                   strokeWidth: "2px",
                 },
                 tooltip: {
-                  content: "A dynamic polygon marker",
+                  content: "A dynamic polysdsdsgon marker",
                   position: "right bottom",
                 },
+              },
+              {
+                // circle marker
+                id: "start-poly",
+                circle: 20,
+                longitude: "0deg",
+                latitude: "15deg",
+                tooltip: "A circle marker",
               },
             ],
           },
@@ -63,13 +83,28 @@ const PanoView = ({ src, roomName }) => {
       ],
     });
 
-    const markersPlugin = viewer.getPlugin(MarkersPlugin);
+    var markersPlugin = viewer.getPlugin(MarkersPlugin);
+
+    markersPlugin.on("select-marker", (e, marker) => {
+      if (isPolyGenerate) {
+        if (marker.id.localeCompare("start-poly") === 0) {
+          console.log("Hello");
+        }
+        //  else {
+        //   console.log("Not");
+      }
+
+      //   markersPlugin.updateMarker({
+      //     id: marker.id,
+      //     image: "assets/pin-blue.png",
+      //   });
+    });
 
     // unmount component instructions
     return () => {
       viewer.destroy();
     };
-  }, [sphereElementRef, src, roomName]); // will only be called when the src prop gets updated
+  }, [sphereElementRef, src, roomName, isPolyGenerate, setIsPolyGenerate]); // will only be called when the src prop gets updated
 
   return (
     <div>

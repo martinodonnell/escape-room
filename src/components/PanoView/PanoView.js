@@ -7,14 +7,11 @@ import "../../../node_modules/photo-sphere-viewer/dist/plugins/markers.css";
 
 const PanoView = ({ src, roomName }) => {
   const sphereElementRef = React.createRef();
-  const [isPolyGenerate, setIsPolyGenerate] = useState(false);
-  const [polyGrid, setPolyGrid] = useState(false);
 
   useEffect(() => {
     const viewer = new Viewer({
       container: sphereElementRef.current,
-      //   panorama: src,
-      panorama: "https://photo-sphere-viewer.js.org/assets/sphere.jpg",
+      panorama: src,
       loadingTxt: "hello",
       caption: roomName,
       navbar: [
@@ -26,13 +23,6 @@ const PanoView = ({ src, roomName }) => {
           content: "Help",
           onClick: () => alert("Nav Button press"),
         },
-        {
-          id: "create-poly",
-          title: "Create Poly",
-          className: "custom-button-poly",
-          content: "Create-Poly",
-          onClick: () => alert("Nav Button press"),
-        },
         "caption",
         "fullscreen",
       ],
@@ -41,43 +31,7 @@ const PanoView = ({ src, roomName }) => {
           MarkersPlugin,
           {
             // list of markers
-            markers: [
-              {
-                // polygon marker
-                id: "polygon",
-                polylineRad: [
-                  [6.2208, 0.0906],
-                  [0.0443, 0.1028],
-                  [0.2322, 0.0849],
-                  [0.4531, 0.0387],
-                  [0.5022, -0.0056],
-                  [0.4587, -0.0396],
-                  [0.252, -0.0453],
-                  [0.0434, -0.0575],
-                  [6.1302, -0.0623],
-                  [6.0094, -0.0169],
-                  [6.0471, 0.032],
-                  [6.2208, 0.0906],
-                ],
-                svgStyle: {
-                  fill: "rgba(200, 0, 0, 0.2)",
-                  stroke: "rgba(200, 0, 50, 0.8)",
-                  strokeWidth: "2px",
-                },
-                tooltip: {
-                  content: "A dynamic polysdsdsgon marker",
-                  position: "right bottom",
-                },
-              },
-              {
-                // circle marker
-                id: "start-poly",
-                circle: 20,
-                longitude: "0deg",
-                latitude: "15deg",
-                tooltip: "A circle marker",
-              },
-            ],
+            markers: [],
           },
         ],
       ],
@@ -86,25 +40,68 @@ const PanoView = ({ src, roomName }) => {
     var markersPlugin = viewer.getPlugin(MarkersPlugin);
 
     markersPlugin.on("select-marker", (e, marker) => {
-      if (isPolyGenerate) {
-        if (marker.id.localeCompare("start-poly") === 0) {
-          console.log("Hello");
-        }
-        //  else {
-        //   console.log("Not");
-      }
+      var text = "";
 
-      //   markersPlugin.updateMarker({
-      //     id: marker.id,
-      //     image: "assets/pin-blue.png",
-      //   });
+      text += "{";
+      text += "id: 'REMOVE',";
+      text += "polylineRad: ";
+      text += JSON.stringify(marker["config"]["polylineRad"]);
+      text += ",";
+      text += "svgStyle: {";
+      text += "fill: 'rgba(200, 0, 0, 0.2)',";
+      text += "stroke: 'rgba(200, 0, 50, 0.8)',";
+      text += "strokeWidth: '2px',";
+      text += "},";
+      text += "tooltip: {";
+      text += "  content: 'A dynamic polysdsdsgon marker',";
+      text += "  position: 'right bottom',";
+      text += "},";
+      text += "},";
+      console.log(text);
+    });
+
+    viewer.on("click", (e, data) => {
+      if (!data.rightclick) {
+        var newPolyMarkerName = "poly-new";
+        var newPolyMarker = markersPlugin["markers"][newPolyMarkerName];
+        if (newPolyMarker) {
+          console.log("Update ");
+          var polyArray = newPolyMarker["config"]["polylineRad"];
+          polyArray.push([data.longitude, data.latitude]);
+
+          markersPlugin.updateMarker({
+            id: newPolyMarkerName,
+            polylineRad: polyArray,
+          });
+        } else {
+          console.log("adding marker");
+          markersPlugin.addMarker({
+            id: newPolyMarkerName,
+            //need to add two positions because it errors out
+            polylineRad: [
+              [data.longitude, data.latitude],
+              [data.longitude + 0.0001, data.latitude + 0.0001],
+            ],
+            svgStyle: {
+              fill: "rgba(200, 0, 0, 0.2)",
+              stroke: "rgba(200, 0, 50, 0.8)",
+              strokeWidth: "2px",
+            },
+            tooltip: {
+              content:
+                "New marker to add. Click the button on nav bar when done",
+              position: "right bottom",
+            },
+          });
+        }
+      }
     });
 
     // unmount component instructions
     return () => {
       viewer.destroy();
     };
-  }, [sphereElementRef, src, roomName, isPolyGenerate, setIsPolyGenerate]); // will only be called when the src prop gets updated
+  }, [sphereElementRef, src, roomName]); // will only be called when the src prop gets updated
 
   return (
     <div>

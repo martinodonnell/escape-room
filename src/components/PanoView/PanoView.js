@@ -2,8 +2,10 @@ import React, { useEffect } from "react";
 import { Viewer } from "photo-sphere-viewer";
 import "../../../node_modules/photo-sphere-viewer/dist/photo-sphere-viewer.css";
 
-import MarkersPlugin from "../../../node_modules/photo-sphere-viewer/dist/plugins/markers";
+import MarkersPlugin from "photo-sphere-viewer/dist/plugins/markers";
 import "../../../node_modules/photo-sphere-viewer/dist/plugins/markers.css";
+import { Nav } from "../Nav";
+import { renderToString } from "react-dom/server";
 
 const PanoView = ({ src, roomName, markers }) => {
   const sphereElementRef = React.createRef();
@@ -13,7 +15,7 @@ const PanoView = ({ src, roomName, markers }) => {
     var viewer_ = new Viewer({
       container: sphereElementRef.current,
       panorama: src,
-      loadingTxt: "hello",
+      loadingTxt: "Loading",
       caption: roomName,
       navbar: [
         "zoom",
@@ -21,7 +23,7 @@ const PanoView = ({ src, roomName, markers }) => {
           id: "my-button",
           title: "Hello world",
           className: "custom-button",
-          content: "Upload New image",
+          content: "Help",
           onClick: () => alert("hello"),
         },
         "caption",
@@ -40,11 +42,7 @@ const PanoView = ({ src, roomName, markers }) => {
     var markersPlugin = viewer_.getPlugin(MarkersPlugin);
 
     markersPlugin.on("select-marker", (e, marker, data) => {
-      console.log(marker.data.getLoading);
-      marker.data.setLoading();
-      console.log(marker.data.getLoading);
       var text = "";
-
       text += "{";
       text += "id: 'REMOVE',";
       text += "polylineRad: ";

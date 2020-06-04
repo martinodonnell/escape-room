@@ -1,6 +1,11 @@
 import React from "react";
 import { PanoView } from "../../../components/PanoView";
-import { blueRoomMarkers } from "../markers";
+import {
+  blueRoomMarkers,
+  ovalOfficeMarker,
+  cabinetRoomMarker,
+  situationRoomMarker,
+} from "../markers";
 
 const BlueRoom = () => {
   return (
@@ -20,7 +25,7 @@ const CabinetRoom = () => {
       <PanoView
         src={require("../assets/cabinet_room.png")}
         roomName="Blue Room"
-        markers={blueRoomMarkers}
+        markers={cabinetRoomMarker}
       />
     </div>
   );
@@ -32,7 +37,7 @@ const OvalOfficeRoom = () => {
       <PanoView
         src={require("../assets/oval_office.png")}
         roomName="Blue Room"
-        markers={blueRoomMarkers}
+        markers={ovalOfficeMarker}
       />
     </div>
   );
@@ -44,7 +49,7 @@ const SituationRoom = () => {
       <PanoView
         src={require("../assets/situation_room.png")}
         roomName="Blue Room"
-        markers={blueRoomMarkers}
+        markers={situationRoomMarker}
       />
     </div>
   );

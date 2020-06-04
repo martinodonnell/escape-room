@@ -1,6 +1,6 @@
 import React from "react";
 
-const UploadFile = ({ setSrc }) => {
+const UploadFile = ({ setSrc, preLoadedSrc }) => {
   const handleChange = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -20,7 +20,7 @@ const UploadFile = ({ setSrc }) => {
   };
 
   const usePreLoadingPanoram = () => {
-    setSrc(require("../../assests/rooms/test_room.jpg"));
+    setSrc(preLoadedSrc);
   };
 
   return (

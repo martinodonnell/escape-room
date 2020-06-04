@@ -5,15 +5,9 @@ import "../../../node_modules/photo-sphere-viewer/dist/photo-sphere-viewer.css";
 import MarkersPlugin from "../../../node_modules/photo-sphere-viewer/dist/plugins/markers";
 import "../../../node_modules/photo-sphere-viewer/dist/plugins/markers.css";
 
-const PanoView = ({ src, setSrc, roomName }) => {
+const PanoView = ({ src, roomName, markers }) => {
   const sphereElementRef = React.createRef();
   const [viewer, setViewer] = React.useState(null);
-
-  const reloadPage = () => {
-    // setSrc("");
-    window.location.reload(false);
-    alert("Reloaded page");
-  };
 
   useEffect(() => {
     var viewer_ = new Viewer({
@@ -28,7 +22,7 @@ const PanoView = ({ src, setSrc, roomName }) => {
           title: "Hello world",
           className: "custom-button",
           content: "Upload New image",
-          onClick: reloadPage,
+          onClick: () => alert("hello"),
         },
         "caption",
         "fullscreen",
@@ -37,8 +31,7 @@ const PanoView = ({ src, setSrc, roomName }) => {
         [
           MarkersPlugin,
           {
-            // list of markers
-            markers: [],
+            markers: markers,
           },
         ],
       ],
@@ -46,7 +39,10 @@ const PanoView = ({ src, setSrc, roomName }) => {
 
     var markersPlugin = viewer_.getPlugin(MarkersPlugin);
 
-    markersPlugin.on("select-marker", (e, marker) => {
+    markersPlugin.on("select-marker", (e, marker, data) => {
+      console.log(marker.data.getLoading);
+      marker.data.setLoading();
+      console.log(marker.data.getLoading);
       var text = "";
 
       text += "{";

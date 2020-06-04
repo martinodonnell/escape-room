@@ -1,20 +1,17 @@
 import React, { useState } from "react";
-import { PanoView } from "./components/PanoView";
-import { UploadFile } from "./components/UploadFile";
+import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 
-function App() {
-  const [src, setSrc] = useState("");
+import Root from "./components/Root";
 
+const App = () => {
   return (
     <div>
-      {src ? (
-        <PanoView src={src} setSrc={setSrc} roomName="Boat Room" />
-      ) : (
-        <UploadFile setSrc={setSrc} />
-      )}
+      <BrowserRouter>
+        <Root />
+      </BrowserRouter>
     </div>
   );
-}
+};
 
 export default App;

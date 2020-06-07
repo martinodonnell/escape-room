@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import "./App.css";
+import ItemContextProvider from "./context/ItemContextProvider";
 
 import Root from "./components/Root";
 
 const App = () => {
   return (
     <div>
-      <BrowserRouter>
-        <Root />
-      </BrowserRouter>
+      <ItemContextProvider>
+        <BrowserRouter>
+          <Root />
+        </BrowserRouter>
+      </ItemContextProvider>
     </div>
   );
 };

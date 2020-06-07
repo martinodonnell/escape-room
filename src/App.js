@@ -4,6 +4,7 @@ import "./App.css";
 import ItemContextProvider from "./context/ItemContextProvider";
 
 import Root from "./components/Root";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const App = () => {
   return (

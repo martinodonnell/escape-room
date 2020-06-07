@@ -4,16 +4,46 @@ import "../../../node_modules/photo-sphere-viewer/dist/photo-sphere-viewer.css";
 
 import MarkersPlugin from "photo-sphere-viewer/dist/plugins/markers";
 import "../../../node_modules/photo-sphere-viewer/dist/plugins/markers.css";
-import { Modal } from "../Modal";
+
+import { Modal, Button } from "react-bootstrap";
+
+function Example() {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  return (
+    <>
+      <Button variant="primary" onClick={handleShow}>
+        Launch demo modal
+      </Button>
+
+      <Modal show={show} onHide={handleClose} backdrop="static">
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
+}
 
 const PanoView = ({ src, roomName, markers }) => {
   const sphereElementRef = createRef();
   const [viewer, setViewer] = useState(null);
-  // const [isModelOpen, setIsModelOpen] = useState(false);
+  const [show, setShow] = useState(false);
 
-  // const selectModal = () => {
-  //   setIsModelOpen(!isModelOpen);
-  // };
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     var viewer_ = new Viewer({
@@ -28,7 +58,7 @@ const PanoView = ({ src, roomName, markers }) => {
           title: "Hello world",
           className: "custom-button",
           content: "Help",
-          // onClick: () => selectModal(),
+          onClick: () => handleShow(),
         },
         "caption",
         "fullscreen",
@@ -106,16 +136,25 @@ const PanoView = ({ src, roomName, markers }) => {
     return () => {
       viewer_.destroy();
     };
-  }, [viewer, sphereElementRef, src, roomName, setViewer, markers]); // will only be called when the src prop gets updated
+  }, []); // will only be called when the src prop gets updated
 
   return (
     <div>
       <div className="viewer" ref={sphereElementRef} />
-      {/* <Modal
-        displayModal={isModelOpen}
-        modalInfo={"info"}
-        closeModal={selectModal}
-      /> */}
+      <Modal show={show} onHide={handleClose} backdrop="static">
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { PanoView } from "../../../components/PanoView";
-import { Modal } from "../../../components/Modal";
+import { Modal, Button } from "react-bootstrap";
+// import { Modal } from "../../../components/Modal";
+// import { Modal } from "carbon-components-react";
+// import "carbon-components/scss/globals/scss/styles.scss";
+// import "../../../node_modules/carbon-components/scss/globals/scss/styles.scss";
 
 import {
   blueRoomMarkers,
@@ -41,8 +45,7 @@ const OvalOfficeRoom = ({ history }) => {
 
   return (
     <div>
-      {/* <NavPopUp handleNav={handleNav} /> */}
-      <Modal />
+      {/* <Example /> */}
       <PanoView
         src={require("../assets/oval_office.png")}
         roomName="Blue Room"

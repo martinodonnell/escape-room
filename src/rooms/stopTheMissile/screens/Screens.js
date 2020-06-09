@@ -1,10 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PanoView } from "../../../components/PanoView";
-import { Modal, Button } from "react-bootstrap";
-// import { Modal } from "../../../components/Modal";
-// import { Modal } from "carbon-components-react";
-// import "carbon-components/scss/globals/scss/styles.scss";
-// import "../../../node_modules/carbon-components/scss/globals/scss/styles.scss";
 
 import {
   blueRoomMarkers,
@@ -14,54 +9,49 @@ import {
 } from "../markers";
 import { NavPopUp } from "../../../components/MarkerContent/NavPopup";
 
-const BlueRoom = (props) => {
+const BlueRoom = () => {
   return (
     <div>
       <PanoView
         src={require("../assets/blue_room.png")}
         roomName="Blue Room"
-        markers={blueRoomMarkers(props)}
+        markers={blueRoomMarkers()}
       />
     </div>
   );
 };
 
-const CabinetRoom = (props) => {
+const CabinetRoom = () => {
   return (
     <div>
       <PanoView
         src={require("../assets/cabinet_room.png")}
         roomName="Blue Room"
-        markers={cabinetRoomMarker(props)}
+        markers={cabinetRoomMarker()}
       />
     </div>
   );
 };
 
-const OvalOfficeRoom = ({ history }) => {
-  function handleNav() {
-    history.push("/path");
-  }
-
+const OvalOfficeRoom = () => {
   return (
     <div>
-      {/* <Example /> */}
       <PanoView
         src={require("../assets/oval_office.png")}
-        roomName="Blue Room"
-        markers={ovalOfficeMarker(handleNav)}
+        roomName="Oval Office"
+        markers={ovalOfficeMarker()}
       />
     </div>
   );
 };
 
-const SituationRoom = (props) => {
+const SituationRoom = () => {
   return (
     <div>
       <PanoView
         src={require("../assets/situation_room.png")}
         roomName="Blue Room"
-        markers={situationRoomMarker(props)}
+        markers={situationRoomMarker()}
       />
     </div>
   );

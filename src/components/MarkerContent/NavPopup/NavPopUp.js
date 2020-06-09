@@ -1,10 +1,10 @@
 import React from "react";
 
-const NavPopUp = (handleNav) => {
+const NavPopUp = () => {
   return (
     <div>
-      <p>This is a door :</p>
-      {/* <button onClick={handleNav()}>Activate Lasers</button> */}
+      <button onClick={() => alert("hello")}>Activate Lasers</button>
+      <a href="/blue-room">sdssdss</a>
     </div>
   );
 };

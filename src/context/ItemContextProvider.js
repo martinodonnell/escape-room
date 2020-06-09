@@ -4,16 +4,21 @@ export const ItemContext = createContext();
 
 export default class ItemContextProvider extends React.Component {
   state = {
-    items: {
-      key1: true,
-    },
+    items: "hello",
   };
+
+  setC(newItem) {
+    this.setState({ items: "hellosdsds" });
+
+    console.log("hsdsdlksdkjh");
+  }
 
   render() {
     return (
       <ItemContext.Provider
         value={{
           ...this.state,
+          setC: this.setC,
         }}
       >
         {this.props.children}

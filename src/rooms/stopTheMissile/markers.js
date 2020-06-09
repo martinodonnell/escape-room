@@ -1,13 +1,16 @@
 import React from "react";
-import { renderToString } from "react-dom/server";
+// import { renderToString, renderToStaticMarkup } from "react-dom/server";
 // import { TextPopUp } from "../../components/MarkerContent/TextPopup";
 import { NavPopUp } from "../../components/MarkerContent/NavPopup";
+import ReactDOMServer from "react-dom/server";
 
 function blueRoomMarkers(props) {
   return [];
 }
 
-function ovalOfficeMarker(handleNav) {
+const Hello = () => <div>hello</div>;
+const ovalOfficeMarker = (handleNav) => {
+  const html = ReactDOMServer.renderToString(<NavPopUp />);
   return [
     {
       id: "door-left",
@@ -27,10 +30,10 @@ function ovalOfficeMarker(handleNav) {
         content: "A dynamic polysdsdsgon marker",
         position: "right bottom",
       },
-      // content: renderToString(<NavPopUp history={handleNav} />),
+      content: html.toString(),
     },
   ];
-}
+};
 
 function cabinetRoomMarker(props) {
   return [];

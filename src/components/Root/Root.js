@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import { Route } from "react-router-dom";
 // import { Nav } from "../../components/Nav";
 import {
@@ -8,13 +8,18 @@ import {
   SituationRoom,
   HomeScreen,
 } from "../../rooms/stopTheMissile/screens";
-
+import { ItemContext } from "../../context/ItemContextProvider";
 import { UploadScreen } from "../../rooms/tutorial/screens";
 
 const Root = () => {
+  const { items, setC } = useContext(ItemContext);
+
+  useEffect(() => {
+    // setContext("sdsds");
+  });
+
   return (
     <div>
-      {/* <Nav /> */}
       <Route component={UploadScreen} exact path="/" />
       <Route component={HomeScreen} path="/stop-missile" />
       <Route component={BlueRoom} path="/blue-room" />
